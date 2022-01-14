@@ -21,14 +21,14 @@ FROM covid_deaths
 WHERE location LIKE 'Brazil'
 AND continent IS NOT NULL
 
--- BUSCAR O TOTAL DE CASOS X POPULA«√O (PORCENTAGEM DA POPULA«√O QUE CONTRAIU COVID)
+-- BUSCAR O TOTAL DE CASOS X POPULA√á√ÉO (PORCENTAGEM DA POPULA√á√ÉO QUE CONTRAIU COVID)
 
 SELECT location, date, population, total_cases, (total_cases/population)*100 AS infect
 FROM covid_deaths
 WHERE location LIKE 'Brazil'
 WHERE continent IS NOT NULL
 
--- QUAIS OS PAÕSES COM MAIOR TAXA DE INFECTADOS EM COMPARA«√O COM A POPULA«√O?
+-- QUAIS OS PA√çSES COM MAIOR TAXA DE INFECTADOS EM COMPARA√á√ÉO COM A POPULA√á√ÉO?
 
 SELECT location, population, MAX(total_cases) as TotalInfct, MAX(total_cases/population)*100 perinfect
 FROM covid_deaths
@@ -36,7 +36,7 @@ WHERE continent IS NOT NULL
 GROUP BY location, population
 ORDER BY perinfect DESC
 
--- TOTAL DE MORTOS X POPULA«√O (PORCENTAGEM DA POPULA«√O QUE FALECEU DE COVID)
+-- TOTAL DE MORTOS X POPULA√á√ÉO (PORCENTAGEM DA POPULA√á√ÉO QUE FALECEU DE COVID)
 
 SELECT location, MAX(cast(total_deaths as int)) AS totalmortes, MAX(total_deaths/population)*100 
 AS permortes 
@@ -53,7 +53,7 @@ WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY totalmortes DESC
 
--- N⁄MEROS GLOBAIS
+-- N√öMEROS GLOBAIS
 
 SELECT date, SUM(new_cases) AS totalcasos, SUM(CAST(new_deaths AS int)) AS totalmortes
 , SUM(CAST(total_deaths AS int))/SUM(CAST(total_cases AS int))*100 AS perdeath
@@ -62,7 +62,7 @@ WHERE continent IS NOT NULL
 GROUP BY date
 ORDER BY 1,2
 
--- NOVAS VACINA«’ES, TOTAL DE PESSOAS VACINADAS E PORCENTAGEM DA POPULA«√O VACINADA
+-- NOVAS VACINA√á√ïES, TOTAL DE PESSOAS VACINADAS E PORCENTAGEM DA POPULA√á√ÉO VACINADA
 -- Usando CTE
 
 WITH PopVax(Continent, Location, Date, Population, New_Vax, Soma_Vax)
@@ -81,7 +81,7 @@ AND dea.location LIKE 'Brazil'
 SELECT *, (Soma_Vax/Population)*100 AS PerVax
 FROM PopVax
 
--- CRIAR UMA VIEW PARA USAR EM VISUALIZA«’ES
+-- CRIAR UMA VIEW PARA USAR EM VISUALIZA√á√ïES
 
 CREATE VIEW porcentagempopvax AS
 SELECT dea.continent, dea.location, dea.date, dea.population, vax.new_vaccinations
